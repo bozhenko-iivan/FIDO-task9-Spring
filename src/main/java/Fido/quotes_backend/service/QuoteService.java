@@ -62,6 +62,10 @@ public class QuoteService {
     public void update(Long id, QuoteRequestDTO quoteRequestDTO) {
         Quote presentQuote = findById(id);
 
+        if (quoteRepository.existsByAuthorAndTextAndIdNot(presentQuote.getAuthor(), presentQuote.getText(), id)) {
+            throw new IllegalArgumentException("Another quote with this author and text already exists");
+        }
+
         presentQuote.setAuthor(quoteRequestDTO.author());
         presentQuote.setText(quoteRequestDTO.text());
 

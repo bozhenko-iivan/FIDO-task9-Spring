@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
     boolean existsByAuthorAndText(String author, String text);
+    boolean existsByAuthorAndTextAndIdNot(String author, String text, Long id);
     Page<Quote> findAllByAuthor(String author, Pageable pageable);
 }
