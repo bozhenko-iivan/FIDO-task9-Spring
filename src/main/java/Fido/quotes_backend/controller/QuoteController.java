@@ -22,12 +22,7 @@ public class QuoteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public QuoteResponseDTO create(@RequestBody QuoteRequestDTO quoteRequestDTO) {
-        Quote quote = new Quote();
-
-        quote.setAuthor(quoteRequestDTO.author());
-        quote.setText(quoteRequestDTO.text());
-
-        Quote savedQuote = quoteService.create(quote);
+        Quote savedQuote = quoteService.create(quoteRequestDTO);
 
         return new QuoteResponseDTO(
                 savedQuote.getId(),
@@ -70,6 +65,6 @@ public class QuoteController {
     @PutMapping(path= "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable(name = "id") Long id, @RequestBody QuoteRequestDTO quoteRequestDTO) {
-        quoteService.update(id,quoteRequestDTO);
+        quoteService.update(id, quoteRequestDTO);
     }
 }

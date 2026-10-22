@@ -25,13 +25,18 @@ public class QuoteService {
         return quote;
     }
 
-    public Quote create(Quote quote) {
-        Quote validQuote = validateQuote(quote);
+    public Quote create(QuoteRequestDTO quoteRequestDTO) {
+        Quote newQuote = new Quote();
+
+        newQuote.setAuthor(quoteRequestDTO.author());
+        newQuote.setText(quoteRequestDTO.text());
+
+        Quote validQuote = validateQuote(newQuote);
         if (quoteRepository.existsByAuthorAndText(validQuote.getAuthor(), validQuote.getText())) {
             throw new IllegalArgumentException("Quote with "
-                    + quote.getAuthor()
+                    + validQuote.getAuthor()
                     + " and "
-                    + quote.getText()
+                    + validQuote.getText()
                     + " already exists"
             );
         }
