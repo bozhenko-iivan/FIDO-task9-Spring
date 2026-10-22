@@ -2,6 +2,7 @@ package Fido.quotes_backend.controller;
 
 import Fido.quotes_backend.dto.QuoteRequestDTO;
 import Fido.quotes_backend.dto.QuoteResponseDTO;
+import Fido.quotes_backend.dto.QuoteResponseIdDTO;
 import Fido.quotes_backend.model.Quote;
 import Fido.quotes_backend.service.QuoteService;
 import org.springframework.data.domain.Pageable;
@@ -21,14 +22,10 @@ public class QuoteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public QuoteResponseDTO create(@RequestBody QuoteRequestDTO quoteRequestDTO) {
+    public QuoteResponseIdDTO create(@RequestBody QuoteRequestDTO quoteRequestDTO) {
         Quote savedQuote = quoteService.create(quoteRequestDTO);
 
-        return new QuoteResponseDTO(
-                savedQuote.getId(),
-                savedQuote.getAuthor(),
-                savedQuote.getText()
-        );
+        return new QuoteResponseIdDTO(savedQuote.getId());
     }
 
     @GetMapping(path = "{id}")
